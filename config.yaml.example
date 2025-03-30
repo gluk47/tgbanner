@@ -1,0 +1,8 @@
+token: 123abc
+
+blacklist:
+  casino:
+  - casino
+
+  spam:
+  - enlarge y?our (sp|h)am

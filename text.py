@@ -15,7 +15,7 @@ def normalize(txt: str) -> str:
         'ɑɛʌʍʙᴀᴄᴅᴇᴍᴎᴋᴏᴑᴘᴙᴛᴢᴣᴦᴧᴨᴩᴫɯ',
         'аелмвасдемикоорятззглпрлш',
     ]
-    
+
     glyph_table = [
         translit[0] + ipa[0],
         translit[1] + ipa[1],
@@ -24,4 +24,4 @@ def normalize(txt: str) -> str:
     if txt == txt_orig:
         return txt
     else:
-        return ' '.join([txt_orig, txt]) 
+        return ' '.join([txt_orig, txt])

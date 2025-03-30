@@ -10,8 +10,10 @@ from text import normalize
 
 logger = logging.getLogger("banhammer")
 
+
 def join_filter(data, sep=' ') -> str:
     return sep.join([_ for _ in data if _])
+
 
 def extract_user_name(msg) -> str:
     try:
@@ -31,7 +33,7 @@ def extract_forward(msg) -> str:
         return join_filter([fwd.chat.title, fwd.chat.username])
     except Exception:
         return ''
- 
+
 
 def extract_keyboard_labels(msg) -> str:
     try:
@@ -40,7 +42,7 @@ def extract_keyboard_labels(msg) -> str:
         return labels
     except Exception as x:
         return ''
-    
+
 
 async def error_handler(update: Update, context: CallbackContext):
     try:
@@ -84,7 +86,9 @@ async def delete_casino_messages(update: Update, context: ContextTypes.DEFAULT_T
 
     re_match = config.BLACKLIST_RE.search(txt)
     if re_match:
-        logger.info(f'[{re_match.group(0)}] {chat_name}: Deleting message: {txt_orig}')
+        logger.info(
+            f'[{re_match.group(0)}] {chat_name}: Deleting message: {txt_orig}'
+        )
         await with_retries(msg.delete)
 
         robot_banner = context.bot_data.get("robot_banner")

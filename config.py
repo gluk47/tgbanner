@@ -11,18 +11,20 @@ logger = logging.getLogger("banhammer")
 
 
 class ConfigReloadHandler(FileSystemEventHandler):
-    def __init__(self, config_path, reload_callback):
+    def __init__(self, config_path):
         self.config_path = config_path
-        self.reload_callback = reload_callback
 
     def on_modified(self, event):
+        global BLACKLIST_RE
         if event.src_path.rsplit('/', 1)[-1] == self.config_path:
-            self.reload_callback()
+            try:
+                _, BLACKLIST_RE = load(self.config_path)
+            except Exception as x:
+                logger.error(f'Failed to reload config, ignored: {x}')
 
 
 def start_watcher(config_path):
-    event_handler = ConfigReloadHandler(
-        config_path, lambda: reload(config_path))
+    event_handler = ConfigReloadHandler(config_path)
     observer = Observer()
     cfgdir = os.path.dirname(os.path.realpath(config_path))
     observer.schedule(event_handler, path=cfgdir, recursive=False)
@@ -41,14 +43,6 @@ def load(path):
 
     BLACKLIST_RE = make_re(BLACKLIST)
     return API_TOKEN, BLACKLIST_RE
-
-
-def reload(config_path):
-    global BLACKLIST_RE
-    try:
-        _, BLACKLIST_RE = load(config_path)
-    except Exception as x:
-        logger.error(f'Failed to reload config, ignored: {x}')
 
 
 def make_re(lst):

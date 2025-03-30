@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 test_root="$(dirname "$BASH_SOURCE")"
 cd "$test_root"

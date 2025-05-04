@@ -38,7 +38,6 @@ class RobotBanner:
 
             await context.bot.ban_chat_member(chat_id, user_id)
             logger.info(f'Banned {user_name} in {chat_name}')
-            del self.stats[user_id]
         except Exception as ban_ex:
             logger.error(f'Failed to ban {user_name} in {chat_name}: {ban_ex}')
 
@@ -49,8 +48,6 @@ class RobotBanner:
             when, user_id = e
             if date - when < self.time_window:
                 break
-            if user_id not in self.stats:
-                continue
             self.stats[user_id] -= 1
             if self.stats[user_id] == 0:
                 del self.stats[user_id]

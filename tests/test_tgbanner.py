@@ -26,7 +26,9 @@ BANNED = [
     'раздень любую девушку',
     'строго 18+', 'чат 18+',
 
-    'пиши + в лс', 'пишите + в лс', 'пиши в лс', 'пишите в лс',
+    'пиши + в лс', 'пишите + в лс', 'пиши "+" в лс', 'пишите «+» в лс',
+
+    '➡️Доход ежедневно',
 ]
 
 NON_BANNED = [
@@ -42,7 +44,7 @@ def test_make_re():
 
 def load():
     mock_message = AsyncMock()
-    config.load('../config.yaml')
+    config.load('config.yaml')
     return mock_message
 
 

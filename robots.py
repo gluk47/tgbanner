@@ -48,7 +48,13 @@ class RobotBanner:
             when, user_id = e
             if date - when < self.time_window:
                 break
-            self.stats[user_id] -= 1
-            if self.stats[user_id] == 0:
-                del self.stats[user_id]
+            if user_id in self.stats:
+                self.stats[user_id] -= 1
+                if self.stats[user_id] == 0:
+                    del self.stats[user_id]
+                elif self.stats[user_id] < 0:
+                    logger.warning(f'User {user_id} has a negative request count, it is a bug, clearing the record')
+                    del self.stats[user_id]
+            else:
+                logger.warning(f'User {user_id} not found in robot stats, it is a bug, ignored')
         self.events = self.events[i:]

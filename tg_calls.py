@@ -105,7 +105,8 @@ async def delete_casino_messages(update: Update, context: ContextTypes.DEFAULT_T
             return
         txt = normalize(txt_orig)
     except Exception as ex:
-        logger.info(f'{ex}\nGot a non-text message: {update}')
+        logger.exception(ex)
+        logger.info(f'Got a non-text message: {update}')
         return
 
     re_match = config.BLACKLIST_RE.search(txt)

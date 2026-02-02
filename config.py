@@ -82,7 +82,9 @@ def get_chat_config(chat_id, configs_by_chat={}):
         'blacklist': None
     }).copy()
     
-    return config.update(CHAT_CONFIGS.get(str(chat_id), {}))
+    config.update(CHAT_CONFIGS.get(str(chat_id), {}))
+    configs_by_chat[chat_id] = config
+    return config
 
 
 BLACKLIST_RE = None
